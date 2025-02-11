@@ -42,7 +42,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<scope>test</scope> <!-- This dependency is only available in our tests (instead of runtime)-->
 		</dependency>
 		<dependency>
 			<groupId>org.postgresql</groupId>
