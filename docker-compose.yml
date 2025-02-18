@@ -1,10 +1,10 @@
 services:
-  #Our PostgreSQL database
+  #Our PostgreSQL database service
     db:
       # The Docker image of postgres -- we're using the latest.
       image: postgres:latest
       # The parts to expose to the host container
-      # 5432 is the default POstgreSQL ports
+      # 5432 is the default PostgreSQL ports
       ports:
         - "5432:5432"
       # If we accidentally kill the running container, Docker Compose will restart it
