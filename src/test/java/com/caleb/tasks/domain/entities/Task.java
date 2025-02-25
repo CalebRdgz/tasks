@@ -37,6 +37,11 @@ public class Task {
     @Column(name = "priority", nullable = false) //always want a task to have a priority
     private TaskPriority priority;
 
+    //create a new instance variable of type TaskList named "taskList":
+    @ManyToOne(fetch = FetchType.LAZY) //taskList wont be loaded in database until it's needed
+    @JoinColumn(name = "task_list_id") //specifies the foreign key column name in the Tasks table. It will be the column in the Tasks table that contains the id of the TaskList to which the Task belongs.
+    private TaskList taskList;
+
     //multiple instance variables for order information:
     @Column(name = "created", nullable = false)
     private LocalDateTime created; //when the entity is created in our database
@@ -46,23 +51,21 @@ public class Task {
     @Column(name = "updated", nullable = false)
     private LocalDateTime updated; //when a task is created, created amd updated will be the same
 
-    //Generate no arguments constructor to begin with:
     public Task() {
     }
 
-    //Generate all arguments constructor:
-    public Task(UUID id, String title, String description, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, LocalDateTime created, LocalDateTime updated) {
+    public Task(UUID id, String title, String description, LocalDateTime dueDate, TaskStatus status, TaskPriority priority, TaskList taskList, LocalDateTime created, LocalDateTime updated) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.dueDate = dueDate;
         this.status = status;
         this.priority = priority;
+        this.taskList = taskList;
         this.created = created;
         this.updated = updated;
     }
 
-    //Generate getters and setters:
     public UUID getId() {
         return id;
     }
@@ -111,6 +114,14 @@ public class Task {
         this.priority = priority;
     }
 
+    public TaskList getTaskList() {
+        return taskList;
+    }
+
+    public void setTaskList(TaskList taskList) {
+        this.taskList = taskList;
+    }
+
     public LocalDateTime getCreated() {
         return created;
     }
@@ -127,21 +138,19 @@ public class Task {
         this.updated = updated;
     }
 
-    //Generate equals() and hashCode() method:
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
-        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(dueDate, task.dueDate) && status == task.status && priority == task.priority && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
+        return Objects.equals(id, task.id) && Objects.equals(title, task.title) && Objects.equals(description, task.description) && Objects.equals(dueDate, task.dueDate) && status == task.status && priority == task.priority && Objects.equals(taskList, task.taskList) && Objects.equals(created, task.created) && Objects.equals(updated, task.updated);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, description, dueDate, status, priority, created, updated);
+        return Objects.hash(id, title, description, dueDate, status, priority, taskList, created, updated);
     }
 
-    //Generate a toString():
     @Override
     public String toString() {
         return "Task{" +
@@ -151,6 +160,7 @@ public class Task {
                 ", dueDate=" + dueDate +
                 ", status=" + status +
                 ", priority=" + priority +
+                ", taskList=" + taskList +
                 ", created=" + created +
                 ", updated=" + updated +
                 '}';
