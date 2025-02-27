@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 //For this interface, Spring Data JPA provides the implementation for us. Makes available methods: save(), findByID(), findAll(), deleteByID()...
-@Repository //@Repository annotation
-public interface TaskListRepository extends JpaRepository<TaskList, UUID> { //JPARepository gives us CRUD behavior (CREATE, READ, UPDATE, DELETE)
+@Repository //@Repository annotation because this interface is a repository
+public interface TaskListRepository extends JpaRepository<TaskList, UUID> { //extending the parent JPARepository gives us CRUD behavior (CREATE, READ, UPDATE, DELETE)
 }
